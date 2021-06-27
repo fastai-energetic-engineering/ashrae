@@ -8,15 +8,16 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Getting Kaggle Data for ASHRAE Energy Prediction" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Queensland AI’s FastAI course online team for ASHRAE Energy Prediction competition from Kaggle." />
-<meta property="og:description" content="Queensland AI’s FastAI course online team for ASHRAE Energy Prediction competition from Kaggle." />
-<link rel="canonical" href="https://fastai-energetic-engineering.github.io/ashrae/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" />
-<meta property="og:url" content="https://fastai-energetic-engineering.github.io/ashrae/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" />
+<meta name="description" content="How to download Kaggle data from Colab." />
+<meta property="og:description" content="How to download Kaggle data from Colab." />
+<link rel="canonical" href="https://fastai-energetic-engineering.github.io/ashrae/kaggle/preprocessing/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" />
+<meta property="og:url" content="https://fastai-energetic-engineering.github.io/ashrae/kaggle/preprocessing/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" />
 <meta property="og:site_name" content="Team Energetic Engineering" />
+<meta property="og:image" content="https://fastai-energetic-engineering.github.io/ashrae/images/some_folder/your_image.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-06-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://fastai-energetic-engineering.github.io/ashrae/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html","@type":"BlogPosting","headline":"Getting Kaggle Data for ASHRAE Energy Prediction","dateModified":"2021-06-27T00:00:00-05:00","datePublished":"2021-06-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://fastai-energetic-engineering.github.io/ashrae/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html"},"description":"Queensland AI’s FastAI course online team for ASHRAE Energy Prediction competition from Kaggle.","@context":"https://schema.org"}</script>
+{"url":"https://fastai-energetic-engineering.github.io/ashrae/kaggle/preprocessing/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html","@type":"BlogPosting","headline":"Getting Kaggle Data for ASHRAE Energy Prediction","dateModified":"2021-06-27T00:00:00-05:00","datePublished":"2021-06-27T00:00:00-05:00","image":"https://fastai-energetic-engineering.github.io/ashrae/images/some_folder/your_image.png","mainEntityOfPage":{"@type":"WebPage","@id":"https://fastai-energetic-engineering.github.io/ashrae/kaggle/preprocessing/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html"},"description":"How to download Kaggle data from Colab.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/ashrae/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fastai-energetic-engineering.github.io/ashrae/feed.xml" title="Team Energetic Engineering" /><link rel="shortcut icon" type="image/x-icon" href="/ashrae/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +72,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Getting Kaggle Data for ASHRAE Energy Prediction</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-06-27T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Getting Kaggle Data for ASHRAE Energy Prediction</h1><p class="page-description">How to download Kaggle data from Colab.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-06-27T00:00:00-05:00" itemprop="datePublished">
         Jun 27, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -81,6 +82,16 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/ashrae/categories/#kaggle">kaggle</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/ashrae/categories/#preprocessing">preprocessing</a>
+        
+      
+      </p>
     
 
     
@@ -108,7 +119,9 @@ window.onload = wrap_img;
       </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <!--
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Joining-Tables">Joining Tables </a></li>
+</ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -117,9 +130,10 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><a href="https://colab.research.google.com/github/fastai-energetic-engineering/ashrae/blob/master/_notebooks/2021-06-27-Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" /></a></p>
+<p><a href="https://colab.research.google.com/github/fastai-energetic-engineering/ashrae/blob/master/_notebooks/2021-06-27-Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
 
 </div>
 </div>
@@ -127,6 +141,9 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -140,12 +157,16 @@ window.onload = wrap_img;
 </div>
 </div>
 
+    </details>
 </div>
     
 
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
@@ -160,10 +181,12 @@ window.onload = wrap_img;
 </div>
 </div>
 
+    </details>
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>This notebook demonstrates how I downloaded the <a href="https://www.kaggle.com/c/ashrae-energy-prediction/overview">ASHRAE Energy Prediction Data</a> from Kaggle.</p>
 <p>First, we need to install the <a href="https://github.com/Kaggle/kaggle-api#api-credentials">Kaggle API</a>.</p>
@@ -188,7 +211,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I will download the data into a folder in my google drive. First, I will set my home directory.</p>
 
@@ -202,8 +226,8 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;gdrive/MyDrive/Colab Notebooks/ashrae/&#39;</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'gdrive/MyDrive/Colab Notebooks/ashrae/'</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="c1"># change directory</span>
 </pre></div>
 
     </div>
@@ -213,7 +237,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We need to download Kaggle API token and then put the <code>.json</code> file in <code>.kaggle</code> folder. We can upload the key directly from colab.</p>
 
@@ -240,7 +265,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We can finally download the file!</p>
 
@@ -254,7 +280,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">)</span> <span class="c1"># move to data folder</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s1">'data'</span><span class="p">)</span> <span class="c1"># move to data folder</span>
 <span class="err">!</span><span class="n">kaggle</span> <span class="n">competitions</span> <span class="n">download</span> <span class="o">-</span><span class="n">c</span> <span class="n">ashrae</span><span class="o">-</span><span class="n">energy</span><span class="o">-</span><span class="n">prediction</span>
 </pre></div>
 
@@ -272,10 +298,10 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.zip&#39;</span><span class="p">):</span>
-        <span class="n">file_extract</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">():</span> <span class="c1"># for every item in the folder</span>
+    <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.zip'</span><span class="p">):</span> <span class="c1"># check if it is a .zip file</span>
+        <span class="n">file_extract</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c1"># if it is, then extract file</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c1"># and then remove the .zip</span>
 </pre></div>
 
     </div>
@@ -292,7 +318,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span> <span class="c1"># return to initial folder</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">".."</span><span class="p">)</span> <span class="c1"># return to initial folder</span>
 </pre></div>
 
     </div>
@@ -302,13 +328,17 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Joining-Tables">Joining Tables<a class="anchor-link" href="#Joining-Tables"> </a></h2>
+<h2 id="Joining-Tables">
+<a class="anchor" href="#Joining-Tables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Joining Tables<a class="anchor-link" href="#Joining-Tables"> </a>
+</h2>
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Our training data comprised of three tables:</p>
 <ul>
@@ -328,9 +358,9 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">building</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/building_metadata.csv&#39;</span><span class="p">)</span>
-<span class="n">weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/weather_train.csv&#39;</span><span class="p">)</span>
-<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/train.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">building</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/building_metadata.csv'</span><span class="p">)</span>
+<span class="n">weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/weather_train.csv'</span><span class="p">)</span>
+<span class="n">train</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/train.csv'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -340,7 +370,8 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>building</code> contains the buildings' metadata.</p>
 
@@ -453,21 +484,29 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><code>site_id</code> - Foreign key for the weather files.</li>
-<li><code>building_id</code> - Foreign key for training.csv</li>
-<li><code>primary_use</code> - Indicator of the primary category of activities for the building based on EnergyStar property type definitions</li>
-<li><code>square_feet</code> - Gross floor area of the building</li>
-<li><code>year_built</code> - Year building was opened</li>
-<li><code>floor_count</code> - Number of floors of the building</li>
+<li>
+<code>site_id</code> - Foreign key for the weather files.</li>
+<li>
+<code>building_id</code> - Foreign key for training.csv</li>
+<li>
+<code>primary_use</code> - Indicator of the primary category of activities for the building based on EnergyStar property type definitions</li>
+<li>
+<code>square_feet</code> - Gross floor area of the building</li>
+<li>
+<code>year_built</code> - Year building was opened</li>
+<li>
+<code>floor_count</code> - Number of floors of the building</li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><code>weather</code> contains weather data from the closest meteorological station.</p>
 
@@ -598,23 +637,32 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li><code>site_id</code></li>
-<li><code>air_temperature</code> - Degrees Celsius</li>
-<li><code>cloud_coverage</code> - Portion of the sky covered in clouds, in oktas</li>
-<li><code>dew_temperature</code> - Degrees Celsius</li>
-<li><code>precip_depth_1_hr</code> - Millimeters</li>
-<li><code>sea_level_pressure</code> - Millibar/hectopascals</li>
-<li><code>wind_direction</code> - Compass direction (0-360)</li>
-<li><code>wind_speed</code> - Meters per second</li>
+<li>
+<code>air_temperature</code> - Degrees Celsius</li>
+<li>
+<code>cloud_coverage</code> - Portion of the sky covered in clouds, in oktas</li>
+<li>
+<code>dew_temperature</code> - Degrees Celsius</li>
+<li>
+<code>precip_depth_1_hr</code> - Millimeters</li>
+<li>
+<code>sea_level_pressure</code> - Millibar/hectopascals</li>
+<li>
+<code>wind_direction</code> - Compass direction (0-360)</li>
+<li>
+<code>wind_speed</code> - Meters per second</li>
 </ul>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Finally, <code>train</code> contains the target variable, <code>meter reading</code>, which represents energy consumption in kWh.</p>
 
@@ -715,13 +763,18 @@ window.onload = wrap_img;
 </div>
     
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
-<li><code>building_id</code> - Foreign key for the building metadata.</li>
-<li><code>meter</code> - The meter id code. Read as {0: electricity, 1: chilledwater, 2: steam, 3: hotwater}. Not every building has all meter types.</li>
-<li><code>timestamp</code> - When the measurement was taken</li>
-<li><code>meter_reading</code> - The target variable. Energy consumption in kWh (or equivalent).</li>
+<li>
+<code>building_id</code> - Foreign key for the building metadata.</li>
+<li>
+<code>meter</code> - The meter id code. Read as {0: electricity, 1: chilledwater, 2: steam, 3: hotwater}. Not every building has all meter types.</li>
+<li>
+<code>timestamp</code> - When the measurement was taken</li>
+<li>
+<code>meter_reading</code> - The target variable. Energy consumption in kWh (or equivalent).</li>
 </ul>
 
 </div>
@@ -731,7 +784,15 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/ashrae/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" hidden></a>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="fastai-energetic-engineering/ashrae"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/ashrae/kaggle/preprocessing/2021/06/27/Getting-ASHRAE-Energy-Prediction-Data-from-Kaggle.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
