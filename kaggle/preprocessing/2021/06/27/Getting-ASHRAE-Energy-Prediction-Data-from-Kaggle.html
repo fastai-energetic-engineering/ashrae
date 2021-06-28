@@ -78,7 +78,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      4 min read
     
 </span></p>
 
@@ -158,6 +158,26 @@ window.onload = wrap_img;
 </div>
 
     </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>     |████████████████████████████████| 727kB 8.1MB/s 
+     |████████████████████████████████| 194kB 35.5MB/s 
+     |████████████████████████████████| 1.2MB 36.4MB/s 
+     |████████████████████████████████| 51kB 9.3MB/s 
+     |████████████████████████████████| 61kB 10.1MB/s 
+     |████████████████████████████████| 61kB 10.9MB/s 
+Mounted at /content/gdrive
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -175,6 +195,7 @@ window.onload = wrap_img;
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">files</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 </pre></div>
 
     </div>
@@ -226,7 +247,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'gdrive/MyDrive/Colab Notebooks/ashrae/'</span><span class="p">)</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'drive/MyDrive/Colab Notebooks/ashrae/'</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="c1"># change directory</span>
 </pre></div>
 
@@ -776,6 +797,248 @@ window.onload = wrap_img;
 <li>
 <code>meter_reading</code> - The target variable. Energy consumption in kWh (or equivalent).</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Apparently there was some issues regarding the timestamps, as noted by <a href="https://www.kaggle.com/c/ashrae-energy-prediction/discussion/115040#latest-667889">this post</a>. The timestamp in the weather and meter reading table were in GMT and local time, respectively. We have to keep this in mind before merging the tables.</p>
+<p>Here I wrote a function that can prepare train and test data accordingly.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">'train'</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">type</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'train'</span><span class="p">,</span> <span class="s1">'test'</span><span class="p">]</span>
+    
+    <span class="c1"># read data</span>
+    <span class="n">building</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'data/building_metadata.csv'</span><span class="p">)</span>
+    <span class="n">weather</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">'data/weather_</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s1">.csv'</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">f</span><span class="s1">'data/</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s1">.csv'</span><span class="p">)</span>
+
+    <span class="c1"># convert datetime</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">])</span>
+
+    <span class="c1"># adjust timestamp</span>
+    <span class="n">timediff</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="mi">11</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">12</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">13</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">14</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="mi">15</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
+    <span class="n">weather</span><span class="p">[</span><span class="s1">'time_diff'</span><span class="p">]</span><span class="o">=</span> <span class="n">weather</span><span class="p">[</span><span class="s1">'site_id'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">timediff</span><span class="p">)</span>
+    <span class="n">weather</span><span class="p">[</span><span class="s1">'time_diff'</span><span class="p">]</span> <span class="o">=</span> <span class="n">weather</span><span class="p">[</span><span class="s1">'time_diff'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">weather</span><span class="p">[</span><span class="s1">'timestamp_gmt'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">weather</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">])</span>
+    <span class="n">weather</span><span class="p">[</span><span class="s1">'timestamp'</span><span class="p">]</span> <span class="o">=</span> <span class="n">weather</span><span class="p">[</span><span class="s1">'timestamp_gmt'</span><span class="p">]</span> <span class="o">-</span> <span class="n">weather</span><span class="p">[</span><span class="s1">'time_diff'</span><span class="p">]</span>
+
+    <span class="c1"># merge table</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">building</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">'building_id'</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">weather</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">'site_id'</span><span class="p">,</span><span class="s1">'timestamp'</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s1">'left'</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try this function out!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">prepare_data</span><span class="p">(</span><span class="s1">'train'</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>building_id</th>
+      <th>meter</th>
+      <th>timestamp</th>
+      <th>meter_reading</th>
+      <th>site_id</th>
+      <th>primary_use</th>
+      <th>square_feet</th>
+      <th>year_built</th>
+      <th>floor_count</th>
+      <th>air_temperature</th>
+      <th>cloud_coverage</th>
+      <th>dew_temperature</th>
+      <th>precip_depth_1_hr</th>
+      <th>sea_level_pressure</th>
+      <th>wind_direction</th>
+      <th>wind_speed</th>
+      <th>time_diff</th>
+      <th>timestamp_gmt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      <td>2016-01-01</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>Education</td>
+      <td>7432</td>
+      <td>2008.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>2.0</td>
+      <td>20.0</td>
+      <td>-1.0</td>
+      <td>1020.0</td>
+      <td>250.0</td>
+      <td>2.6</td>
+      <td>0 days 04:00:00</td>
+      <td>2016-01-01 04:00:00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>2016-01-01</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>Education</td>
+      <td>2720</td>
+      <td>2004.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>2.0</td>
+      <td>20.0</td>
+      <td>-1.0</td>
+      <td>1020.0</td>
+      <td>250.0</td>
+      <td>2.6</td>
+      <td>0 days 04:00:00</td>
+      <td>2016-01-01 04:00:00</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0</td>
+      <td>2016-01-01</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>Education</td>
+      <td>5376</td>
+      <td>1991.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>2.0</td>
+      <td>20.0</td>
+      <td>-1.0</td>
+      <td>1020.0</td>
+      <td>250.0</td>
+      <td>2.6</td>
+      <td>0 days 04:00:00</td>
+      <td>2016-01-01 04:00:00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>0</td>
+      <td>2016-01-01</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>Education</td>
+      <td>23685</td>
+      <td>2002.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>2.0</td>
+      <td>20.0</td>
+      <td>-1.0</td>
+      <td>1020.0</td>
+      <td>250.0</td>
+      <td>2.6</td>
+      <td>0 days 04:00:00</td>
+      <td>2016-01-01 04:00:00</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>0</td>
+      <td>2016-01-01</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>Education</td>
+      <td>116607</td>
+      <td>1975.0</td>
+      <td>NaN</td>
+      <td>20.0</td>
+      <td>2.0</td>
+      <td>20.0</td>
+      <td>-1.0</td>
+      <td>1020.0</td>
+      <td>250.0</td>
+      <td>2.6</td>
+      <td>0 days 04:00:00</td>
+      <td>2016-01-01 04:00:00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's it! In the next blogpost, I will show how to load this data into FastAI's <code>dataloaders</code>.</p>
 
 </div>
 </div>
