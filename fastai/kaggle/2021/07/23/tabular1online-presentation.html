@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ASHRAE Energy Prediction | Team Energetic Engineering</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="ASHRAE Energy Prediction" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="by Energetic Engineering, the tabular-1-online group in the 2021 fast.ai course" />
+<meta property="og:description" content="by Energetic Engineering, the tabular-1-online group in the 2021 fast.ai course" />
+<link rel="canonical" href="https://fastai-energetic-engineering.github.io/ashrae/fastai/kaggle/2021/07/23/tabular1online-presentation.html" />
+<meta property="og:url" content="https://fastai-energetic-engineering.github.io/ashrae/fastai/kaggle/2021/07/23/tabular1online-presentation.html" />
+<meta property="og:site_name" content="Team Energetic Engineering" />
+<meta property="og:image" content="https://fastai-energetic-engineering.github.io/ashrae/images/joey-kyber-Pihl8kTtX-s-unsplash.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://fastai-energetic-engineering.github.io/ashrae/fastai/kaggle/2021/07/23/tabular1online-presentation.html","@type":"BlogPosting","headline":"ASHRAE Energy Prediction","dateModified":"2021-07-23T00:00:00-05:00","datePublished":"2021-07-23T00:00:00-05:00","image":"https://fastai-energetic-engineering.github.io/ashrae/images/joey-kyber-Pihl8kTtX-s-unsplash.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://fastai-energetic-engineering.github.io/ashrae/fastai/kaggle/2021/07/23/tabular1online-presentation.html"},"description":"by Energetic Engineering, the tabular-1-online group in the 2021 fast.ai course","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/ashrae/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://fastai-energetic-engineering.github.io/ashrae/feed.xml" title="Team Energetic Engineering" /><link rel="shortcut icon" type="image/x-icon" href="/ashrae/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/ashrae/">Team Energetic Engineering</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/ashrae/about/">About Us</a><a class="page-link" href="/ashrae/search/">Search</a><a class="page-link" href="/ashrae/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">ASHRAE Energy Prediction</h1><p class="page-description">by Energetic Engineering, the tabular-1-online group in the 2021 fast.ai course</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-23T00:00:00-05:00" itemprop="datePublished">
+        Jul 23, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/ashrae/categories/#fastai">fastai</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/ashrae/categories/#kaggle">kaggle</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/fastai-energetic-engineering/ashrae/tree/master/_notebooks/2021-07-23-tabular1online-presentation.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/ashrae/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/fastai-energetic-engineering/ashrae/master?filepath=_notebooks%2F2021-07-23-tabular1online-presentation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ashrae/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/fastai-energetic-engineering/ashrae/blob/master/_notebooks/2021-07-23-tabular1online-presentation.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/ashrae/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-07-23-tabular1online-presentation.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://colab.research.google.com/github/fastai-energetic-engineering/ashrae/blob/master/_notebooks/2021-07-23-tabular1online-presentation.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://www.kaggle.com/c/ashrae-energy-prediction">ASHRAE Great Energy Predictor III</a> is a Kaggle competition to predict energy use in buildings.</p>
+<p>The training dataset is 3.2GB, containing 20 million energy meter readings for 1449 buildings over a year. Four energy meters are sampled: chilled water, electric, hot water, and steam. Each dependent measurement is given with independent variable metadata for the building and weather. The <a href="https://www.kaggle.com/c/ashrae-energy-prediction/data">Kaggle data page</a> shows the available files, with histograms for each variable.</p>
+<p>Our goal was to create a model that predicts energy usage per building and per meter in that building, using fast.ai.</p>
+<p>We started by downloading the dataset from Kaggle, joining the tables, fixing timestamp inconsistencies and transforming some values into smaller datatypes to save memory. We aimed to work in Colab so memory was precious.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">Uqq</span> <span class="n">fastbook</span> <span class="n">dtreeviz</span>
+<span class="kn">import</span> <span class="nn">fastbook</span>
+<span class="n">fastbook</span><span class="o">.</span><span class="n">setup_book</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">gc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">tqdm.auto</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">pandas.api.types</span> <span class="kn">import</span> <span class="n">is_string_dtype</span><span class="p">,</span> <span class="n">is_numeric_dtype</span><span class="p">,</span> <span class="n">is_categorical_dtype</span>
+<span class="kn">from</span> <span class="nn">fastai.tabular.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">dtreeviz.trees</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">display_svg</span><span class="p">,</span> <span class="n">SVG</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">8</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="s1">'/content/gdrive/MyDrive/Colab Notebooks/ashrae'</span>
+<span class="n">train_valid</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s2">"feature_enhanced_train_combined.parquet.snappy"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1">## Memory optimization</span>
+
+<span class="c1"># Original code from https://www.kaggle.com/gemartin/load-data-reduce-memory-usage by @gemartin</span>
+<span class="c1"># Modified to support timestamp type, categorical type</span>
+<span class="c1"># Modified to add option to use float16</span>
+
+<span class="kn">from</span> <span class="nn">pandas.api.types</span> <span class="kn">import</span> <span class="n">is_datetime64_any_dtype</span> <span class="k">as</span> <span class="n">is_datetime</span>
+<span class="kn">from</span> <span class="nn">pandas.api.types</span> <span class="kn">import</span> <span class="n">is_categorical_dtype</span>
+
+<span class="k">def</span> <span class="nf">reduce_mem_usage</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">use_float16</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Iterate through all the columns of a dataframe and modify the data type to reduce memory usage.        </span>
+<span class="sd">    """</span>
+    
+    <span class="n">start_mem</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Memory usage of dataframe is </span><span class="si">{:.2f}</span><span class="s2"> MB"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start_mem</span><span class="p">))</span>
+    
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="ow">or</span> <span class="n">is_categorical_dtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="ow">or</span> <span class="n">is_string_dtype</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]):</span>
+            <span class="k">continue</span>
+        <span class="n">col_type</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+        
+        <span class="k">if</span> <span class="n">col_type</span> <span class="o">!=</span> <span class="nb">object</span><span class="p">:</span>
+            <span class="n">c_min</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+            <span class="n">c_max</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">col_type</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"int"</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>  
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">use_float16</span> <span class="ow">and</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float16</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">c_min</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">min</span> <span class="ow">and</span> <span class="n">c_max</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"category"</span><span class="p">)</span>
+
+    <span class="n">end_mem</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Memory usage after optimization is: </span><span class="si">{:.2f}</span><span class="s2"> MB"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end_mem</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Decreased by </span><span class="si">{:.1f}</span><span class="s2">%"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span> <span class="o">*</span> <span class="p">(</span><span class="n">start_mem</span> <span class="o">-</span> <span class="n">end_mem</span><span class="p">)</span> <span class="o">/</span> <span class="n">start_mem</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">train_valid</span> <span class="o">=</span> <span class="n">reduce_mem_usage</span><span class="p">(</span><span class="n">train_valid</span><span class="p">,</span> <span class="n">use_float16</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We started by browsing exploratory data analysis notebooks posted to Kaggle. We learnt that this is a gnarly dataset, with many missing values and outliers. For example, the 'meter_reading' dependent variable has mostly small values but also some very large values:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">train_valid</span><span class="p">[[</span><span class="s1">'meter_reading'</span><span class="p">]]</span><span class="o">.</span><span class="n">hist</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="fastai-energetic-engineering/ashrae"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/ashrae/fastai/kaggle/2021/07/23/tabular1online-presentation.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/ashrae/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/ashrae/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/ashrae/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Queensland AI&#39;s FastAI course online team for ASHRAE Energy Prediction competition from Kaggle.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/fastai" title="fastai"><svg class="svg-icon grey"><use xlink:href="/ashrae/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/fastdotai" title="fastdotai"><svg class="svg-icon grey"><use xlink:href="/ashrae/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
